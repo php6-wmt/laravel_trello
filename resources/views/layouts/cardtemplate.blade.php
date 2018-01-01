@@ -10,10 +10,24 @@
     {{--bootstrap css--}}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
     <style>
+        header{
+         position: fixed;
+            width: 100%;
+        }
+
+        .row{
+            margin-left: 10px;
+        }
         .sort ul{
             border: 1px solid lightgray;
-
+        }
+        .card-body li:nth-child(2n){
+            background-color: #f2f2f2;
+        }
+        .card-footer{
+            font-size: small;
         }
         .round {
             position: relative;
@@ -48,7 +62,7 @@
 
         .round input[type="checkbox"] {
             visibility: hidden;
-            margin-left: 15px;
+            margin-left: 38px;
         }
 
         .round input[type="checkbox"]:checked + label {
@@ -58,6 +72,11 @@
 
         .round input[type="checkbox"]:checked + label:after {
             opacity: 1;
+
+        }
+        .round input[type="checkbox"]:checked ~ span {
+            color: #8c8c8c;
+            text-decoration: line-through;
         }
 
         html, body {
@@ -66,13 +85,8 @@
         }
 
         body {
-            background-color: #f1f2f3;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
+            background-color: lightgray;
+
         }
 
         .container {
@@ -82,9 +96,8 @@
     </style>
 
 </head>
-<body style="background-color: lightgray">
+<body>
 <div class="container-fluid">
-
     @yield('content')
 </div>
 {{--bootstrap js--}}
@@ -100,6 +113,8 @@
         crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/js/vendor/humanreadable/time-ago-in-words.min.js"></script>
+
 @yield('script')
 </body>
 </html>

@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/main' ,function (){
+Route::get('/main', function () {
     return view('main');
 });
 
@@ -38,6 +38,8 @@ Route::get('/mainBoard/{id}/card/store', 'CardController@store')->name('card.sto
 Route::get('/mainBoard/card/taskstore', 'CardController@taskstore')->name('card.taskstore');
 Route::get('/mainBoard/card/updatetask', 'CardController@updatetask')->name('card.updatetask');
 Route::get('/mainBoard/card/updatestatus', 'CardController@updatestatus')->name('card.updatestatus');
+Route::get('/mainBoard/{id}/card/deletetask', 'CardController@deletetask')->name('card.deletetask');
+Route::get('/mainBoard/card/updatetaskcontent', 'CardController@updatetaskcontent')->name('card.updatetaskcontent');
 
 
 
