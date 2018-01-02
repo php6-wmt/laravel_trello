@@ -3,51 +3,6 @@
 @section('content')
 
 
-    <div class="header">
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('mainBoard.index') }}">MainBoard</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Card</a>
-                </li>
-            </ul>
-
-            <!-- Authentication Links -->
-            <div>
-                @guest
-
-                    <a href="{{ route('login') }}" class="btn btn-default float-md-right">Login</a>
-                    <a href="{{ route('register') }}" class="btn btn-default">Register</a>
-                @else
-                    <div class="dropdown">
-                        <a href="#" class="dropdown-toggle btn btn-default float-md-right" data-toggle="dropdown"
-                           role="button"
-                           aria-expanded="false"
-                           aria-haspopup="true">
-                            {{ Auth::user()->name }} <span class="caret"></span>
-                        </a>
-
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                       document.getElementById('logout-form').submit();">
-                                    Logout
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                      style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                @endguest
-            </div>
-        </nav>
-    </div>
     <div align="center">
         <h1>Welcome to Card</h1>
     </div>
@@ -59,8 +14,9 @@
 
                 <div class="card text center">
 
-                    <h4 class="card-header text-center"
-                        id="main">{{ $card->card_name }}</h4>
+                        <h4 id="{{ $card->id }}" class="editcard card-header text-center">
+                            {{ $card->card_name }}
+                        </h4>
 
                     <div class="card-body">
                         <div class="card1">
@@ -68,22 +24,22 @@
                                 <ul id="{{ $card->id }}" class="task list-group" style="list-style-type:none">
                                     @foreach($card->task as $task)
 
-                                        <li id="{{ $task->id }}" class="edtspn card-body list-group-item">
+                                        <li id="{{ $task->id }}" class="card-body move list-group-item">
                                             <div class="round">
 
                                                 <input type="checkbox"
-                                                       id="{{ $task->id }}  checkbox" {{$task->task_status ? 'checked': ''}}>
-                                                <label for="{{ $task->id }} checkbox"></label>
-                                                <span class="editspan">{{$task->task_content }}</span>
-                                                <!-- Example single danger button -->
-
-                                                <a href="{{ route('card.deletetask',['id'=>$task->id]) }}"
-                                                   class="float-md-right">
+                                                       id="{{ $task->id }}_checkbox" {{$task->task_status ? 'checked': ''}}>
+                                                <label for="{{ $task->id }}_checkbox"></label>
+                                                <span class="editspan"
+                                                >{{$task->task_content }}</span>
+                                                {{--delete btn--}}
+                                                <button id="{{ $task->id }}"
+                                                        class="btn deletebtn btn-sm float-md-right">
                                                     <i class="fa fa-times" aria-hidden="true"></i>
-                                                </a>
-
-                                                <button data-type="edit" value="{{ $task->task_content }}"
-                                                        id="{{ $task->id }}" class="editbtn btn-sm float-md-right">
+                                                </button>
+                                                {{--edit button--}}
+                                                <button data-type="edit"
+                                                        id="{{ $task->id }}" class="btn editbtn btn-sm float-md-right">
                                                     <i class="fa fa-pencil fa-fw"></i>
                                                 </button>
                                             </div>
@@ -105,7 +61,8 @@
                         </form>
                     </div>
                     <div class="timeago card-footer text-muted"
-                         title="{{ $card->created_at }}">{{ $card->created_at }}</div>
+                         title="{{ $card->created_at }}">{{ $card->created_at }}
+                    </div>
                 </div>
             </div>
         @endforeach
@@ -123,31 +80,58 @@
 @section('script')
     <script>
 
-        $(".timeago").timeago();
+        $(document).ready(function () {
 
-        $(".additem").keypress(function (e) {
-            if (e.which === 13) {
-                var item = $(this).closest('form').serialize();
-                // console.log(item);
-                e.preventDefault();
+
+            $(".timeago").timeago();
+
+            $(".editcard").on('click',function () {
+
+                $(this).attr('contenteditable','true').focus();
+                var card_id = $(this).attr('id');
+
+            });
+            $(".editcard").focusout(function () {
+                var card_id =$(this).attr('id');
+                var card_name = $(this).text();
+                $(this).attr('contenteditable','false');
+                console.log(card_name);
                 $.ajax({
-                    type: "get",
-                    url: "{{ route('card.taskstore') }}",
-                    data:
+                    type : 'get',
+                    url : '{{ route('card.updatecardcontent') }}',
+                    data :
                         {
-                            array: item,
-                            id: "{{ $id }}"
-                        },
-                    success: function () {
-                        location.reload();
-                    }
+                           card_id : `${card_id}`,
+                           card_name : `${card_name}`
+                        }
                 })
-            }
-        });
+            })
 
-        $(function () {
+
+            $(".additem").keypress(function (e) {
+                if (e.which === 13) {
+                    var item = $(this).closest('form').serialize();
+                    // console.log(item);
+                    e.preventDefault();
+                    $.ajax({
+                        type: "get",
+                        url: "{{ route('card.taskstore') }}",
+                        data:
+                            {
+                                array: item,
+                                id: "{{ $id }}"
+                            },
+                        success: function () {
+                            location.reload();
+                        }
+                    })
+                }
+            });
+
+
             $(".task, .card1").sortable({
                 connectWith: ".task, .card1",
+                cancel: 'span',
                 receive: function (event, ui) {
                     var card_id = $(this).attr('id'); //cardid
 
@@ -162,14 +146,14 @@
 
                     })
                 }
-            }).disableSelection();
+            })
 
 
             $('input[type="checkbox"]').click(function () {
                 if ($(this).is(":checked")) {
 
                     var task_id = $(this).attr('id');
-                    // console.log(task_id);
+                    console.log(task_id);
                     $.ajax({
                         url: "{{ route('card.updatestatus') }}",
                         data: {
@@ -193,34 +177,58 @@
                     })
                 }
             });
-        });
 
-        $('.editbtn').on('click', function () {
-            var editbtnid = $(this).attr('id');
-            var p = $(this).closest('li');
-            var editcontent = p.find('span').text();
-            var attrbtn = $('button').attr('data-type');
-            console.log(editbtnid);
-            console.log(editcontent);
-            console.log(attrbtn);
-            switch (attrbtn) {
-                case 'edit':
-                    $(editbtnid,'.editbtn').attr('data-type', 'save').text("<i class=\"fa fa-floppy-o\"></i>");
-                    $(editbtnid,'.edtspn').attr('contenteditable', 'true');
-                    break;
-                case 'save':
-                    $(editbtnid,'.editbtn').attr('data-type', 'edit').text("<i class=\"fa fa-pencil fa-fw\"></i>");
-                    $(editbtnid,'.edtspn').attr('contenteditable', 'false');
-                    {{--$.ajax({--}}
-                        {{--type:'get',--}}
-                        {{--url: '{{ route(' card.updatetaskcontent') }}',--}}
-                        {{--data: {--}}
-                            {{--task_id: `${editbtnid}`,--}}
-                            {{--task_content: `${editcontent}`--}}
-                        {{--}--}}
-                    {{--})--}}
-                    break;
-            }
+
+            $('.editbtn').on('click', function () {
+
+                var editBtnId = $(this).attr('id');
+                var btn = $(this).closest('button');
+                var p = $(this).closest('li');
+                var editcontent = p.find('span');
+                var editTaskContent = p.find('span').text();
+                var attrBtn = $(btn).attr('data-type');
+                console.log(editBtnId);
+                console.log(editcontent);
+                console.log(attrBtn);
+                console.log(btn);
+                $(editcontent).toggleClass('hover');
+                switch (attrBtn) {
+                    case 'edit':
+                        $(btn).attr('data-type', 'save').html('<i class="fa fa-floppy-o" aria-hidden="true"></i>');
+                        $(editcontent).attr('contentEditable', 'true');
+
+                        break;
+                    case 'save':
+                        $(btn).attr('data-type', 'edit').html('<i class="fa fa-pencil fa-fw"></i>');
+                        $(editcontent).attr('contentEditable', 'false');
+                        $.ajax({
+                            type: 'get',
+                            url: '{{ route('card.updatetaskcontent') }}',
+                            data: {
+                                task_id: `${editBtnId}`,
+                                task_content: `${editTaskContent}`
+                            }
+                        })
+                        break;
+                }
+            });
+
+            $('.deletebtn').on('click', function () {
+
+                var task_id = $(this).attr('id');
+                console.log(task_id);
+                $.ajax({
+                    type: 'get',
+                    url: '{{ route('card.deletetask') }}',
+                    data:
+                        {
+                            task_id: `${task_id}`
+                        },
+                    success: function () {
+                        location.reload();
+                    }
+                })
+            });
         });
     </script>
 @endsection

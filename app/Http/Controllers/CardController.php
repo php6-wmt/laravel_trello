@@ -61,17 +61,26 @@ class CardController extends Controller
         $task->task_status =$request->status;
         $task->save();
     }
-    public function deletetask($id)
+    public function deletetask(Request $request)
     {
-        $task = Task::find($id);
+        $task_id =$request->task_id;
+        $task = Task::find($task_id);
         $task->delete();
-        return redirect()->back();
+
     }
     public function updatetaskcontent(Request $request)
     {
+//        return 'hello';
         $task_id =$request->task_id;
         $task =Task::find($task_id);
         $task->task_content = $request->task_content;
         $task->save();
+    }
+    public function updatecardcontent(Request $request)
+    {
+       $card_id = $request->card_id;
+       $card = Card::find($card_id);
+       $card->card_name = $request->card_name;
+       $card->save();
     }
 }
