@@ -3,11 +3,6 @@
 @section('content')
 
 
-
-    <div align="center">
-        <h1>Welcome To Trello</h1>
-    </div>
-
     <div class="row">
         @foreach($displayBoard as $board)
             <div class="col-sm-2">

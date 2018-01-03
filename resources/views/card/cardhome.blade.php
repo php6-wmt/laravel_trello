@@ -2,29 +2,24 @@
 @section('title','Card')
 @section('content')
 
-
-    <div align="center">
-        <h1>Welcome to Card</h1>
-    </div>
-
     <div class="row">
 
         @foreach($displayCard as $card)
             <div class="col-sm-3">
 
-                <div class="card text center">
-
-                        <h4 id="{{ $card->id }}" class="editcard card-header text-center">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h4 id="{{ $card->id }}" class="editcard">
                             {{ $card->card_name }}
                         </h4>
-
+                    </div>
                     <div class="card-body">
-                        <div class="card1">
-                            <div class="sort">
+                        <div class="mycard">
+
                                 <ul id="{{ $card->id }}" class="task list-group" style="list-style-type:none">
                                     @foreach($card->task as $task)
 
-                                        <li id="{{ $task->id }}" class="card-body move list-group-item">
+                                        <li id="{{ $task->id }}" class="hoverelement move list-group-item">
                                             <div class="round">
 
                                                 <input type="checkbox"
@@ -45,11 +40,10 @@
                                             </div>
                                         </li>
 
-
                                     @endforeach
                                 </ul>
-                            </div>
-                            &nbsp;
+
+
                         </div>
                         <form class="myform" method="get">
                             {{ csrf_field() }}
@@ -60,8 +54,10 @@
 
                         </form>
                     </div>
-                    <div class="timeago card-footer text-muted"
+                    <div class="card-footer text-muted">
+                    <div class="timeago"
                          title="{{ $card->created_at }}">{{ $card->created_at }}
+                    </div>
                     </div>
                 </div>
             </div>
@@ -85,24 +81,24 @@
 
             $(".timeago").timeago();
 
-            $(".editcard").on('click',function () {
+            $(".editcard").on('click', function () {
 
-                $(this).attr('contenteditable','true').focus();
+                $(this).attr('contenteditable', 'true').focus();
                 var card_id = $(this).attr('id');
 
             });
             $(".editcard").focusout(function () {
-                var card_id =$(this).attr('id');
+                var card_id = $(this).attr('id');
                 var card_name = $(this).text();
-                $(this).attr('contenteditable','false');
+                $(this).attr('contenteditable', 'false');
                 console.log(card_name);
                 $.ajax({
-                    type : 'get',
-                    url : '{{ route('card.updatecardcontent') }}',
-                    data :
+                    type: 'get',
+                    url: '{{ route('card.updatecardcontent') }}',
+                    data:
                         {
-                           card_id : `${card_id}`,
-                           card_name : `${card_name}`
+                            card_id: `${card_id}`,
+                            card_name: `${card_name}`
                         }
                 })
             })
@@ -129,8 +125,8 @@
             });
 
 
-            $(".task, .card1").sortable({
-                connectWith: ".task, .card1",
+            $(".task, .mycard").sortable({
+                connectWith: ".task, .mycard",
                 cancel: 'span',
                 receive: function (event, ui) {
                     var card_id = $(this).attr('id'); //cardid
