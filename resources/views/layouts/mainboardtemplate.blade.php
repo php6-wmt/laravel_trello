@@ -20,36 +20,60 @@
             left: 50%;
             transform: translateX(-50%);
             color: white;
-            text-shadow: 1px 1px 2px #546E7A;
-            font-family: 'Tangerine', serif;
+
+        }
+        h2{
+            color: white;
+        }
+        form lable{
+            color: #FFFFFF;
+        }
+        html{
+            height: 100%;
         }
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: ghostwhite;
+            background-color: #3F51B5;
         }
 
+        .labelclr {
+            color: white;
+        }
         nav {
+            height: 70px;
             background-color: #3F51B5 !important;
         }
-
         a {
-           color: white;
+            color: white;
         }
-        a:hover{
-            color: #CFD8DC;
+        a:hover {
+            color: white;
             text-decoration-line: none;
         }
-
-        .card{
-            background-color: #324090;
-            margin:10px 0px;
-
-        }
-        .card:hover{
-            background-color: #5262BC;
+        .card {
+            color: #3F51B5;
+            font-size: 20px;
+            background-color: #FFFFFF;
+            margin: 20px 0px;
+            padding: 25px 15px;
 
         }
-        .row{
+
+        .card:hover {
+            border-left:7px solid #2c387e;
+            color: #3F51B5;
+            background-color: snow;
+            /*box-shadow: 0 10px 45px #25306C;*/
+
+        }
+        /*card-dack{*/
+            /*transition: all .3s,border-color .3s,transform .3s,-webkit-transform .3s;*/
+        /*}*/
+        /*.card-deck:hover{*/
+            /*border-top: 7px solid #2c387e;*/
+        /*}*/
+        .row {
+
             margin: 10px;
         }
 
@@ -59,23 +83,53 @@
             font-size: 18px;
             margin: 8px 18px;
         }
-        a.btn:hover{
+
+        .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+            background-color: transparent;
+            color: white;
+            border: none;
+        }
+
+
+        /*.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {*/
+            /*background-color: transparent;*/
+            /*color: white;*/
+            /*border: none !important;*/
+        /*}*/
+        .createbtncolor{
+            background-color: transparent;
+            color:white;
+            font-size: 18px;
+        }
+        .createbtncolor:hover{
+            color:white;
+        }
+        a.btn:hover {
+            border: none;
+            color: white;
             text-decoration: none;
             background-color: transparent;
         }
-        .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover{
+        a.btn:focus{
+            border:none!important;
+        }
+        .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
             background-color: transparent;
             color: white;
             font-size: 18px;
             margin: 3px 10px;
         }
 
+        .navbar-default {
+            border: none !important;
+        }
+        .row a{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 <div id="app">
-
-
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container-fluid">
 
@@ -83,9 +137,10 @@
             <div class="collapse navbar-expand-sm navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">MainBoard</a>
+                    <li class="nav-item active"s>
+                        <a class="navbar-brand" href="{{ route('home') }}">Trello</a>
                     </li>
+
 
                 </ul>
                 <ul class="nav navbar-nav">
@@ -95,8 +150,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @guest
-                        <a href="{{ route('login') }}" class="btn float-md-right">Login</a>
-                        <a href="{{ route('register') }}" class="btn">Register</a>
+                        <a href="{{ route('login') }}" class="fontcolorbtn btn float-md-right">Login</a>
+                        <a href="{{ route('register') }}" class="fontcolorbtn btn">Register</a>
                     @else
                         <div class="dropdown">
                             <a href="#" class="btn float-md-right" data-toggle="dropdown"
@@ -128,7 +183,7 @@
         </div>
     </nav>
     <div class="container-fluid">
-    @yield('content')
+        @yield('content')
     </div>
 </div>
 

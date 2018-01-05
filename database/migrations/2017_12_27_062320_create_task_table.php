@@ -18,6 +18,7 @@ class CreateTaskTable extends Migration
             $table->integer('card_id')->unsigned();
             $table->foreign('card_id')->references('id')->on('card');
             $table->string('task_content');
+            $table->integer('task_order');
             $table->tinyInteger('task_status');
             $table->timestamps();
         });

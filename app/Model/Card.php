@@ -13,6 +13,6 @@ class Card extends Model
     }
     public function task()
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class)->orderBy('task_order');
     }
 }

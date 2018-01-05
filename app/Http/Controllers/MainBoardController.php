@@ -21,6 +21,9 @@ class MainBoardController extends Controller
     }
     public function store(Request $request)
     {
+        $this->validate($request,[
+           'board_name'=> 'required|min:2|max:20'
+        ]);
         $board = new MainBoard();
         $board->user_id = Auth::id();
         $board->board_name = $request->board_name;

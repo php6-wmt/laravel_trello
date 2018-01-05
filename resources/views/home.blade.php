@@ -1,28 +1,16 @@
 @extends('layouts.mainboardtemplate')
 @section('title','Main Board')
 @section('content')
-
-
     <div class="row">
         @foreach($displayBoard as $board)
             <div class="col-sm-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title text-center"><a
-                                    href="{{ route('card.index', ['id'=>$board->id]) }}">{{ $board->board_name }}</a></h4>
-
-                    </div>
+                <div class="card-deck">
+                <a href="{{ route('card.index', ['id'=>$board->id]) }}"
+                   class="card card-body text-center">{{ $board->board_name }}</a>
                 </div>
             </div>
-
         @endforeach
-
         <div class="col-sm-2">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title text-center"><a href="{{ route('mainBoard.add') }}">+Add Board</a></h4>
-                </div>
-            </div>
+            <a href="{{ route('mainBoard.add') }}" class="card card-body text-center">+Add Board</a>
         </div>
-    </div>
 @endsection

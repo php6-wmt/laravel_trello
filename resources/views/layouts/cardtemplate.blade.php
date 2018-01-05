@@ -12,21 +12,37 @@
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <style>
 
+    <style>
+        {{--create card--}}
+        h2 {
+            color: white;
+        }
+
+        .labelclr {
+            color: white;
+        }
+       .createbtncolor{
+            background-color: transparent;
+           color:white;
+           font-size: 18px;
+        }
+.createbtncolor:hover{
+    color:white;
+}
         h1 {
             margin: 8px 18px;
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
             color: white;
-            text-shadow: 1px 1px 2px #607D8B;
+
             font-family: 'Tangerine', serif;
         }
 
         nav {
-            position: fixed;
-            background-color: rgb(63, 81, 181) !important;
+            height: 70px;
+            background-color: #3F51B5 !important;
             border-color: transparent;
         }
 
@@ -41,27 +57,45 @@
             font-size: 25px;
             color: #3F51B5;
             cursor: pointer;
+            padding: 7px;
         }
 
         .hover {
             border: 1px solid #6573C3 !important;
             padding: 5px;
-            color: #000 !important;
+            color: #3F51B5 !important;
         }
 
         a.btn {
             background-color: transparent;
-            border-color: transparent;
-
+            border:none;
             color: white;
             font-size: 18px;
             margin: 8px 18px;
         }
 
+        a.btn:focus {
+            background-color: transparent !important;
+            border: none !important;
+            border-color: transparent;
+        }
+
         a.btn:hover {
             background-color: transparent;
             border: none;
+            color: white;
 
+        }
+
+        .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+            border: none;
+            border-color: transparent;
+        }
+
+        .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+            background-color: transparent;
+            color: white;
+            border: none;
         }
 
         .navbar-default .navbar-nav > li > a, .navbar-default .navbar-text {
@@ -79,10 +113,6 @@
             font-size: 18px;
         }
 
-        .row {
-            margin-left: 10px;
-        }
-
         .move {
             cursor: pointer;
         }
@@ -91,59 +121,73 @@
             border-color: transparent;
         }
 
-        body {
+        html {
+            height: 100%;
+        }
 
+        body {
+            background-color: #3F51B5;
             font-family: 'Roboto', sans-serif;
             font-size: 18px;
         }
 
         .card {
 
-            margin: 10px 0px;
-            box-shadow: 0 15px 35px #C5CAE8, 0 5px 15px #C5CAE8;
+            margin: 10px 10px;
+            box-shadow: 0 10px 45px #25306C;
         }
 
         .card-body li {
             margin: 0 !important;
             border: none;
-            border-bottom: 1px solid rgba(216, 220, 240 ,0.5) !important;
+            border-bottom: 1px solid rgba(216, 220, 240, 0.5) !important;
             padding: 15px 0px;
         }
 
         .card button {
             background-color: transparent;
         }
-        .card-header{
-            margin: 0!important;
-            border:none;
+
+        .card-header {
+            padding: 0px;
+            margin: 0 !important;
+            border: none;
             border-bottom: 0.5px solid #C5CAE8 !important;
         }
-        .card-footer{
-            margin: 0!important;
-            border:none;
+
+        .card-footer {
+            margin: 0 !important;
+            border: none;
             border-top: 1px solid #C5CAE8 !important;
         }
+
         .card-body {
             border-color: transparent;
         }
-        .timeago{
+
+        .timeago {
             font-size: 14px;
             color: #3F51B5;
 
         }
-        span[contenteditable="true"]{
-            color:red;
+
+        .additem {
+            border: 0.5px solid #C5CAE8;
         }
-        button i{
-            color: #6573C3;
+
+        button i {
+            color: #3F51B5;
         }
-        h4 a{
-            color:#3F51B5;
+
+        h4 a {
+            color: #3F51B5;
         }
-        h4 a:hover{
+
+        h4 a:hover {
             color: #121836;
             text-decoration-line: none
         }
+
         .round {
             position: relative;
             margin: 0 auto;
@@ -181,8 +225,8 @@
         }
 
         .round input[type="checkbox"]:checked + label {
-            background-color: #6573C3;
-            border-color: #6573C3;
+            background-color: #3F51B5;
+            border-color: #3F51B5;
         }
 
         .round input[type="checkbox"]:checked + label:after {
@@ -194,7 +238,6 @@
             color: #a7a5a5;
             text-decoration: line-through;
         }
-
 
     </style>
 
@@ -215,12 +258,6 @@
                         <a class="nav-link" href="#">Card</a>
                     </li>
                 </ul>
-
-                {{--title--}}
-                <ul class="nav navbar-nav">
-                    <h1>Welcome To Card</h1>
-                </ul>
-
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
@@ -276,7 +313,7 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="/js/vendor/humanreadable/time-ago-in-words.min.js"></script>
-
+<script src="/js/vendor/jquery.ui.touch-punch.min.js"></script>
 
 @yield('script')
 </body>
